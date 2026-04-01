@@ -1,0 +1,44 @@
+defmodule App.Bsky.Graph.Verification do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "main" => %{
+        "description" =>
+          "Record declaring a verification relationship between two accounts. Verifications are only considered valid by an app if issued by an account the app considers trusted.",
+        "key" => "tid",
+        "record" => %{
+          "properties" => %{
+            "createdAt" => %{
+              "description" => "Date of when the verification was created.",
+              "format" => "datetime",
+              "type" => "string"
+            },
+            "displayName" => %{
+              "description" =>
+                "Display name of the subject the verification applies to at the moment of verifying, which might not be the same at the time of viewing. The verification is only valid if the current displayName matches the one at the time of verifying.",
+              "type" => "string"
+            },
+            "handle" => %{
+              "description" =>
+                "Handle of the subject the verification applies to at the moment of verifying, which might not be the same at the time of viewing. The verification is only valid if the current handle matches the one at the time of verifying.",
+              "format" => "handle",
+              "type" => "string"
+            },
+            "subject" => %{
+              "description" => "DID of the subject the verification applies to.",
+              "format" => "did",
+              "type" => "string"
+            }
+          },
+          "required" => ["subject", "handle", "displayName", "createdAt"],
+          "type" => "object"
+        },
+        "type" => "record"
+      }
+    },
+    "id" => "app.bsky.graph.verification",
+    "lexicon" => 1
+  })
+end

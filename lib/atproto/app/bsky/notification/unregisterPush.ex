@@ -1,0 +1,32 @@
+defmodule App.Bsky.Notification.UnregisterPush do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "main" => %{
+        "description" =>
+          "The inverse of registerPush - inform a specified service that push notifications should no longer be sent to the given token for the requesting account. Requires auth.",
+        "input" => %{
+          "encoding" => "application/json",
+          "schema" => %{
+            "properties" => %{
+              "appId" => %{"type" => "string"},
+              "platform" => %{
+                "knownValues" => ["ios", "android", "web"],
+                "type" => "string"
+              },
+              "serviceDid" => %{"format" => "did", "type" => "string"},
+              "token" => %{"type" => "string"}
+            },
+            "required" => ["serviceDid", "token", "platform", "appId"],
+            "type" => "object"
+          }
+        },
+        "type" => "procedure"
+      }
+    },
+    "id" => "app.bsky.notification.unregisterPush",
+    "lexicon" => 1
+  })
+end

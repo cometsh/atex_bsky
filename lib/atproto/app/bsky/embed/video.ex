@@ -1,0 +1,79 @@
+defmodule App.Bsky.Embed.Video do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "caption" => %{
+        "properties" => %{
+          "file" => %{
+            "accept" => ["text/vtt"],
+            "maxSize" => 20000,
+            "type" => "blob"
+          },
+          "lang" => %{"format" => "language", "type" => "string"}
+        },
+        "required" => ["lang", "file"],
+        "type" => "object"
+      },
+      "main" => %{
+        "properties" => %{
+          "alt" => %{
+            "description" => "Alt text description of the video, for accessibility.",
+            "maxGraphemes" => 1000,
+            "maxLength" => 10000,
+            "type" => "string"
+          },
+          "aspectRatio" => %{
+            "ref" => "app.bsky.embed.defs#aspectRatio",
+            "type" => "ref"
+          },
+          "captions" => %{
+            "items" => %{"ref" => "#caption", "type" => "ref"},
+            "maxLength" => 20,
+            "type" => "array"
+          },
+          "presentation" => %{
+            "description" => "A hint to the client about how to present the video.",
+            "knownValues" => ["default", "gif"],
+            "type" => "string"
+          },
+          "video" => %{
+            "accept" => ["video/mp4"],
+            "description" => "The mp4 video file. May be up to 100mb, formerly limited to 50mb.",
+            "maxSize" => 100_000_000,
+            "type" => "blob"
+          }
+        },
+        "required" => ["video"],
+        "type" => "object"
+      },
+      "view" => %{
+        "properties" => %{
+          "alt" => %{
+            "maxGraphemes" => 1000,
+            "maxLength" => 10000,
+            "type" => "string"
+          },
+          "aspectRatio" => %{
+            "ref" => "app.bsky.embed.defs#aspectRatio",
+            "type" => "ref"
+          },
+          "cid" => %{"format" => "cid", "type" => "string"},
+          "playlist" => %{"format" => "uri", "type" => "string"},
+          "presentation" => %{
+            "description" => "A hint to the client about how to present the video.",
+            "knownValues" => ["default", "gif"],
+            "type" => "string"
+          },
+          "thumbnail" => %{"format" => "uri", "type" => "string"}
+        },
+        "required" => ["cid", "playlist"],
+        "type" => "object"
+      }
+    },
+    "description" => "A video embedded in a Bluesky record (eg, a post).",
+    "id" => "app.bsky.embed.video",
+    "lexicon" => 1
+  })
+end

@@ -1,0 +1,43 @@
+defmodule App.Bsky.Feed.DescribeFeedGenerator do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "feed" => %{
+        "properties" => %{"uri" => %{"format" => "at-uri", "type" => "string"}},
+        "required" => ["uri"],
+        "type" => "object"
+      },
+      "links" => %{
+        "properties" => %{
+          "privacyPolicy" => %{"type" => "string"},
+          "termsOfService" => %{"type" => "string"}
+        },
+        "type" => "object"
+      },
+      "main" => %{
+        "description" =>
+          "Get information about a feed generator, including policies and offered feed URIs. Does not require auth; implemented by Feed Generator services (not App View).",
+        "output" => %{
+          "encoding" => "application/json",
+          "schema" => %{
+            "properties" => %{
+              "did" => %{"format" => "did", "type" => "string"},
+              "feeds" => %{
+                "items" => %{"ref" => "#feed", "type" => "ref"},
+                "type" => "array"
+              },
+              "links" => %{"ref" => "#links", "type" => "ref"}
+            },
+            "required" => ["did", "feeds"],
+            "type" => "object"
+          }
+        },
+        "type" => "query"
+      }
+    },
+    "id" => "app.bsky.feed.describeFeedGenerator",
+    "lexicon" => 1
+  })
+end

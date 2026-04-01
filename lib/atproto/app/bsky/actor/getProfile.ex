@@ -1,0 +1,34 @@
+defmodule App.Bsky.Actor.GetProfile do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "main" => %{
+        "description" =>
+          "Get detailed profile view of an actor. Does not require auth, but contains relevant metadata with auth.",
+        "output" => %{
+          "encoding" => "application/json",
+          "schema" => %{
+            "ref" => "app.bsky.actor.defs#profileViewDetailed",
+            "type" => "ref"
+          }
+        },
+        "parameters" => %{
+          "properties" => %{
+            "actor" => %{
+              "description" => "Handle or DID of account to fetch profile of.",
+              "format" => "at-identifier",
+              "type" => "string"
+            }
+          },
+          "required" => ["actor"],
+          "type" => "params"
+        },
+        "type" => "query"
+      }
+    },
+    "id" => "app.bsky.actor.getProfile",
+    "lexicon" => 1
+  })
+end

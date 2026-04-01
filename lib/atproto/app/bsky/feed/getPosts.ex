@@ -1,0 +1,44 @@
+defmodule App.Bsky.Feed.GetPosts do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "main" => %{
+        "description" =>
+          "Gets post views for a specified list of posts (by AT-URI). This is sometimes referred to as 'hydrating' a 'feed skeleton'.",
+        "output" => %{
+          "encoding" => "application/json",
+          "schema" => %{
+            "properties" => %{
+              "posts" => %{
+                "items" => %{
+                  "ref" => "app.bsky.feed.defs#postView",
+                  "type" => "ref"
+                },
+                "type" => "array"
+              }
+            },
+            "required" => ["posts"],
+            "type" => "object"
+          }
+        },
+        "parameters" => %{
+          "properties" => %{
+            "uris" => %{
+              "description" => "List of post AT-URIs to return hydrated views for.",
+              "items" => %{"format" => "at-uri", "type" => "string"},
+              "maxLength" => 25,
+              "type" => "array"
+            }
+          },
+          "required" => ["uris"],
+          "type" => "params"
+        },
+        "type" => "query"
+      }
+    },
+    "id" => "app.bsky.feed.getPosts",
+    "lexicon" => 1
+  })
+end

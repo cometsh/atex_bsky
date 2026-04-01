@@ -1,0 +1,210 @@
+defmodule App.Bsky.Graph.Defs do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "curatelist" => %{
+        "description" =>
+          "A list of actors used for curation purposes such as list feeds or interaction gating.",
+        "type" => "token"
+      },
+      "listItemView" => %{
+        "properties" => %{
+          "subject" => %{
+            "ref" => "app.bsky.actor.defs#profileView",
+            "type" => "ref"
+          },
+          "uri" => %{"format" => "at-uri", "type" => "string"}
+        },
+        "required" => ["uri", "subject"],
+        "type" => "object"
+      },
+      "listPurpose" => %{
+        "knownValues" => [
+          "app.bsky.graph.defs#modlist",
+          "app.bsky.graph.defs#curatelist",
+          "app.bsky.graph.defs#referencelist"
+        ],
+        "type" => "string"
+      },
+      "listView" => %{
+        "properties" => %{
+          "avatar" => %{"format" => "uri", "type" => "string"},
+          "cid" => %{"format" => "cid", "type" => "string"},
+          "creator" => %{
+            "ref" => "app.bsky.actor.defs#profileView",
+            "type" => "ref"
+          },
+          "description" => %{
+            "maxGraphemes" => 300,
+            "maxLength" => 3000,
+            "type" => "string"
+          },
+          "descriptionFacets" => %{
+            "items" => %{"ref" => "app.bsky.richtext.facet", "type" => "ref"},
+            "type" => "array"
+          },
+          "indexedAt" => %{"format" => "datetime", "type" => "string"},
+          "labels" => %{
+            "items" => %{"ref" => "com.atproto.label.defs#label", "type" => "ref"},
+            "type" => "array"
+          },
+          "listItemCount" => %{"minimum" => 0, "type" => "integer"},
+          "name" => %{"maxLength" => 64, "minLength" => 1, "type" => "string"},
+          "purpose" => %{"ref" => "#listPurpose", "type" => "ref"},
+          "uri" => %{"format" => "at-uri", "type" => "string"},
+          "viewer" => %{"ref" => "#listViewerState", "type" => "ref"}
+        },
+        "required" => ["uri", "cid", "creator", "name", "purpose", "indexedAt"],
+        "type" => "object"
+      },
+      "listViewBasic" => %{
+        "properties" => %{
+          "avatar" => %{"format" => "uri", "type" => "string"},
+          "cid" => %{"format" => "cid", "type" => "string"},
+          "indexedAt" => %{"format" => "datetime", "type" => "string"},
+          "labels" => %{
+            "items" => %{"ref" => "com.atproto.label.defs#label", "type" => "ref"},
+            "type" => "array"
+          },
+          "listItemCount" => %{"minimum" => 0, "type" => "integer"},
+          "name" => %{"maxLength" => 64, "minLength" => 1, "type" => "string"},
+          "purpose" => %{"ref" => "#listPurpose", "type" => "ref"},
+          "uri" => %{"format" => "at-uri", "type" => "string"},
+          "viewer" => %{"ref" => "#listViewerState", "type" => "ref"}
+        },
+        "required" => ["uri", "cid", "name", "purpose"],
+        "type" => "object"
+      },
+      "listViewerState" => %{
+        "properties" => %{
+          "blocked" => %{"format" => "at-uri", "type" => "string"},
+          "muted" => %{"type" => "boolean"}
+        },
+        "type" => "object"
+      },
+      "modlist" => %{
+        "description" =>
+          "A list of actors to apply an aggregate moderation action (mute/block) on.",
+        "type" => "token"
+      },
+      "notFoundActor" => %{
+        "description" => "indicates that a handle or DID could not be resolved",
+        "properties" => %{
+          "actor" => %{"format" => "at-identifier", "type" => "string"},
+          "notFound" => %{"const" => true, "type" => "boolean"}
+        },
+        "required" => ["actor", "notFound"],
+        "type" => "object"
+      },
+      "referencelist" => %{
+        "description" =>
+          "A list of actors used for only for reference purposes such as within a starter pack.",
+        "type" => "token"
+      },
+      "relationship" => %{
+        "description" =>
+          "lists the bi-directional graph relationships between one actor (not indicated in the object), and the target actors (the DID included in the object)",
+        "properties" => %{
+          "blockedBy" => %{
+            "description" =>
+              "if the actor is blocked by this DID, contains the AT-URI of the block record",
+            "format" => "at-uri",
+            "type" => "string"
+          },
+          "blockedByList" => %{
+            "description" =>
+              "if the actor is blocked by this DID via a block list, contains the AT-URI of the listblock record",
+            "format" => "at-uri",
+            "type" => "string"
+          },
+          "blocking" => %{
+            "description" =>
+              "if the actor blocks this DID, this is the AT-URI of the block record",
+            "format" => "at-uri",
+            "type" => "string"
+          },
+          "blockingByList" => %{
+            "description" =>
+              "if the actor blocks this DID via a block list, this is the AT-URI of the listblock record",
+            "format" => "at-uri",
+            "type" => "string"
+          },
+          "did" => %{"format" => "did", "type" => "string"},
+          "followedBy" => %{
+            "description" =>
+              "if the actor is followed by this DID, contains the AT-URI of the follow record",
+            "format" => "at-uri",
+            "type" => "string"
+          },
+          "following" => %{
+            "description" =>
+              "if the actor follows this DID, this is the AT-URI of the follow record",
+            "format" => "at-uri",
+            "type" => "string"
+          }
+        },
+        "required" => ["did"],
+        "type" => "object"
+      },
+      "starterPackView" => %{
+        "properties" => %{
+          "cid" => %{"format" => "cid", "type" => "string"},
+          "creator" => %{
+            "ref" => "app.bsky.actor.defs#profileViewBasic",
+            "type" => "ref"
+          },
+          "feeds" => %{
+            "items" => %{
+              "ref" => "app.bsky.feed.defs#generatorView",
+              "type" => "ref"
+            },
+            "maxLength" => 3,
+            "type" => "array"
+          },
+          "indexedAt" => %{"format" => "datetime", "type" => "string"},
+          "joinedAllTimeCount" => %{"minimum" => 0, "type" => "integer"},
+          "joinedWeekCount" => %{"minimum" => 0, "type" => "integer"},
+          "labels" => %{
+            "items" => %{"ref" => "com.atproto.label.defs#label", "type" => "ref"},
+            "type" => "array"
+          },
+          "list" => %{"ref" => "#listViewBasic", "type" => "ref"},
+          "listItemsSample" => %{
+            "items" => %{"ref" => "#listItemView", "type" => "ref"},
+            "maxLength" => 12,
+            "type" => "array"
+          },
+          "record" => %{"type" => "unknown"},
+          "uri" => %{"format" => "at-uri", "type" => "string"}
+        },
+        "required" => ["uri", "cid", "record", "creator", "indexedAt"],
+        "type" => "object"
+      },
+      "starterPackViewBasic" => %{
+        "properties" => %{
+          "cid" => %{"format" => "cid", "type" => "string"},
+          "creator" => %{
+            "ref" => "app.bsky.actor.defs#profileViewBasic",
+            "type" => "ref"
+          },
+          "indexedAt" => %{"format" => "datetime", "type" => "string"},
+          "joinedAllTimeCount" => %{"minimum" => 0, "type" => "integer"},
+          "joinedWeekCount" => %{"minimum" => 0, "type" => "integer"},
+          "labels" => %{
+            "items" => %{"ref" => "com.atproto.label.defs#label", "type" => "ref"},
+            "type" => "array"
+          },
+          "listItemCount" => %{"minimum" => 0, "type" => "integer"},
+          "record" => %{"type" => "unknown"},
+          "uri" => %{"format" => "at-uri", "type" => "string"}
+        },
+        "required" => ["uri", "cid", "record", "creator", "indexedAt"],
+        "type" => "object"
+      }
+    },
+    "id" => "app.bsky.graph.defs",
+    "lexicon" => 1
+  })
+end

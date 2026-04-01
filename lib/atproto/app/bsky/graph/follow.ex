@@ -1,0 +1,26 @@
+defmodule App.Bsky.Graph.Follow do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "main" => %{
+        "description" =>
+          "Record declaring a social 'follow' relationship of another account. Duplicate follows will be ignored by the AppView.",
+        "key" => "tid",
+        "record" => %{
+          "properties" => %{
+            "createdAt" => %{"format" => "datetime", "type" => "string"},
+            "subject" => %{"format" => "did", "type" => "string"},
+            "via" => %{"ref" => "com.atproto.repo.strongRef", "type" => "ref"}
+          },
+          "required" => ["subject", "createdAt"],
+          "type" => "object"
+        },
+        "type" => "record"
+      }
+    },
+    "id" => "app.bsky.graph.follow",
+    "lexicon" => 1
+  })
+end

@@ -1,0 +1,42 @@
+defmodule App.Bsky.Actor.GetProfiles do
+  @moduledoc false
+  use Atex.Lexicon
+
+  deflexicon(%{
+    "defs" => %{
+      "main" => %{
+        "description" => "Get detailed profile views of multiple actors.",
+        "output" => %{
+          "encoding" => "application/json",
+          "schema" => %{
+            "properties" => %{
+              "profiles" => %{
+                "items" => %{
+                  "ref" => "app.bsky.actor.defs#profileViewDetailed",
+                  "type" => "ref"
+                },
+                "type" => "array"
+              }
+            },
+            "required" => ["profiles"],
+            "type" => "object"
+          }
+        },
+        "parameters" => %{
+          "properties" => %{
+            "actors" => %{
+              "items" => %{"format" => "at-identifier", "type" => "string"},
+              "maxLength" => 25,
+              "type" => "array"
+            }
+          },
+          "required" => ["actors"],
+          "type" => "params"
+        },
+        "type" => "query"
+      }
+    },
+    "id" => "app.bsky.actor.getProfiles",
+    "lexicon" => 1
+  })
+end
