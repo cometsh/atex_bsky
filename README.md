@@ -1,16 +1,16 @@
-# atex_atproto
+# atex_bsky
 
 This package contains the [`app.bsky`] and [`chat.bsky`] lexicons translated
 into Elixir modules for use with [atex].
 
 ## Installation
 
-Add `atex_atproto` to your list of dependencies in `mix.exs`:
+Add `atex_bsky` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:atex_atproto, "~> 0.1"}
+    {:atex_bsky, "~> 0.1"}
   ]
 end
 ```
