@@ -1,6 +1,6 @@
 # atex_bsky
 
-This package contains the [`app.bsky`] and [`chat.bsky`] lexicons translated
+This package contains the [app.bsky] and [chat.bsky] lexicons translated
 into Elixir modules for use with [atex].
 
 ## Installation
@@ -15,8 +15,6 @@ def deps do
 end
 ```
 
-[`app.bsky`]:
-  https://github.com/bluesky-social/atproto/tree/main/lexicons/app/bsky
-[`chat.bsky`]:
-  https://github.com/bluesky-social/atproto/tree/main/lexicons/chat/bsky
+[app.bsky]: https://github.com/bluesky-social/atproto/tree/main/lexicons/app/bsky
+[chat.bsky]: https://github.com/bluesky-social/atproto/tree/main/lexicons/chat/bsky
 [atex]: https://github.com/cometsh/atex
