@@ -8,3 +8,4 @@ atex_bsky-*.tar
 /tmp/
 .envrc
 .direnv
+.dexter*

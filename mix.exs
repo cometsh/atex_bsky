@@ -1,7 +1,7 @@
 defmodule AtexBsky.MixProject do
   use Mix.Project
 
-  @version "0.1.1"
+  @version "0.1.2"
   @github "https://github.com/cometsh/atex_bsky"
   @tangled "https://tangled.sh/@comet.sh/atex_bsky"
 
@@ -29,7 +29,7 @@ defmodule AtexBsky.MixProject do
 
   defp deps do
     [
-      {:atex, "~> 0.8"},
+      {:atex, "~> 0.9"},
       {:ex_doc, "~> 0.39", only: :dev, runtime: false, warn_if_outdated: true}
     ]
   end
